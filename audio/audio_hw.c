@@ -67,7 +67,7 @@
 #define PERC_TO_CAPTURE_VOLUME(x) ( (int)((x) * 120 ))
 #define PERC_TO_MIC_VOLUME(x) ( (int)((x) * 31 ))
 #define PERC_TO_HEADSET_VOLUME(x) ( (int)((x) * 63 ))
-#define PERC_TO_SPEAKER_VOLUME(x) ( (int)((x) * 63 ))
+#define PERC_TO_SPEAKER_VOLUME(x) ( (int)((x) * 31 ))
 
 #define OUT_PERIOD_SIZE 880
 #define OUT_SHORT_PERIOD_COUNT 2
