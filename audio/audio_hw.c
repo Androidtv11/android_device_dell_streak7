@@ -69,7 +69,7 @@
 #define PERC_TO_HEADSET_VOLUME(x) ( (int)((x) * 63 ))
 #define PERC_TO_SPEAKER_VOLUME(x) ( (int)((x) * 63 ))
 
-#define OUT_PERIOD_SIZE 1520
+#define OUT_PERIOD_SIZE 880
 #define OUT_SHORT_PERIOD_COUNT 2
 #define OUT_LONG_PERIOD_COUNT 8
 #define OUT_SAMPLING_RATE 44100
