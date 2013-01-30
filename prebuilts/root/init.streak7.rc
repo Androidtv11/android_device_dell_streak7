@@ -11,16 +11,10 @@ on init
     mkdir /storage/sdcard0 0000 system system
     symlink /storage/sdcard0 /sdcard
     symlink /storage/sdcard0 /mnt/sdcard
-<<<<<<< HEAD
      
     # create directory for mounting external sdcard
     mkdir /storage/sdcard1 0666 system system
     symlink /storage/sdcard1 /external_sd
-=======
-
-    export SECONDARY_STORAGE /storage/sdcard1
-    mkdir /storage/sdcard1 0050 system system
->>>>>>> 1e9ef68ef2a2c69b8b2d54ffb4e94c73a84a1da6
     symlink /storage/sdcard1 /mnt/external_sd
 
     # create directory for mounting usb drives

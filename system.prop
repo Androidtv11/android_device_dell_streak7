@@ -9,15 +9,4 @@ debug.performance.tuning=1
 video.accelerate.hw=1
 debug.sf.hw=1
 sys.usb.config=mtp,adb
-<<<<<<< HEAD
 
-=======
-ro.emmc.sdcard.partition=15
-persist.fuse_sdcard=false
-ro.secure=0
-
-#Support IPv4
-persist.telephony.support.ipv4=1
-#Disable IPv6
-persist.telephony.support.ipv6=0
->>>>>>> 1e9ef68ef2a2c69b8b2d54ffb4e94c73a84a1da6

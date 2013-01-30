@@ -6,9 +6,4 @@ ro.allow.mock.location=0
 ro.debuggable=1
 persist.service.adb.enable=1
 sys.usb.config=mtp,adb
-<<<<<<< HEAD
 service.adb.root=1
-=======
-#Disable IPv6
-net.ipv6.conf.default.disable_ipv6 = 1
->>>>>>> 1e9ef68ef2a2c69b8b2d54ffb4e94c73a84a1da6
