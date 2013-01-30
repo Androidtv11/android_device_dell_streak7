@@ -156,3 +156,4 @@ static const struct sensor_t sSensorList[] = {
 };
 
 static int acc_id;
+
