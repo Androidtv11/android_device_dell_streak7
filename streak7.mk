@@ -43,10 +43,7 @@ PRODUCT_COPY_FILES += \
     
 PRODUCT_PACKAGES += \
     lights.tegra \
-    camera.tegra \
-    com.android.future.usb.accessory \
     libinvensense_mpl \
-    drmserver \
     librs_jni \
     libdrmframework_jni
 
@@ -57,8 +54,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     libpkip \
-    CMFileManager \
-    libnetcmdiface \
     wmiconfig
 
 #Audio
