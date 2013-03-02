@@ -34,7 +34,7 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 474435456
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 107374824
 BOARD_FLASH_BLOCK_SIZE := 131072
 
-BOARD_DATA_DEVICE := /dev/block/mmcblk0p14
+BOARD_DATA_DEVICE := /dev/block/mmcblk0p7
 BOARD_DATA_FILESYSTEM := ext4
 BOARD_CACHE_DEVICE := /dev/block/mmcblk04
 BOARD_CACHE_FILESYSTEM := ext4
@@ -63,10 +63,10 @@ BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
 BOARD_WLAN_DEVICE := bcm4329
 WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/dhd.ko"
-WIFI_DRIVER_FW_STA_PATH     := "/vendor/firmware/fw_bcm4329_abg.bin"
+WIFI_DRIVER_FW_STA_PATH     := "/vendor/firmware/fw_bcm4329.bin"
 WIFI_DRIVER_FW_AP_PATH      := "/vendor/firmware/fw_bcm4329_apsta.bin"
 WIFI_DRIVER_MODULE_NAME     :=  "dhd"
-WIFI_DRIVER_MODULE_ARG      :=  "firmware_path=/vendor/firmware/fw_bcm4329_abg.bin nvram_path=/system/etc/wifi/nvram.txt iface_name=wlan0"
+WIFI_DRIVER_MODULE_ARG      :=  "firmware_path=/vendor/firmware/fw_bcm4329.bin nvram_path=/system/etc/wifi/nvram.txt iface_name=wlan0"
 WIFI_BAND := 802_11_ABG
 
 # GPS
@@ -78,28 +78,16 @@ NEED_WORKAROUND_CORTEX_A9_745320 := true
 
 BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER := true
 
-# Use nicer font rendering
-BOARD_USE_SKIA_LCDTEXT := true
-SMALLER_FONT_FOOTPRINT := true
-
 #Expiermental stuff
-BOARD_USES_SECURE_SERVICES := true
 BOARD_USES_OVERLAY := true
-USE_CAMERA_STUB := false
-#COMMON_GLOBAL_CFLAGS += -DICS_CAMERA_BLOB
+BOARD_USES_SECURE_SERVICES := true
 
 # custom recovery ui
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/dell/streak7/recovery/recovery_ui.c
+BOARD_HAS_NO_SELECT_BUTTON := true
 
-#TWRP Stuff
-DEVICE_RESOLUTION := 800x480
-TW_NO_USB_STORAGE := true
-TW_FLASH_FROM_STORAGE := true
-RECOVERY_SDCARD_ON_DATA := true
-TW_NO_REBOOT_BOOTLOADER := true
-TW_NO_REBOOT_RECOVERY := true
-TW_DEFAULT_EXTERNAL_STORAGE := true
-TW_INTERNAL_STORAGE_PATH := "/data/media"
-TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
-TW_EXTERNAL_STORAGE_PATH := "/external_sd"
-TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
+#Lets try this here
+TARGET_KERNEL_CONFIG := streak7_ubuntu_defconfig
+TARGET_KERNEL_SOURCE := kernel/dell/streak7
+
+

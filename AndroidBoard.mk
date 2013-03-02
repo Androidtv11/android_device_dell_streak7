@@ -3,6 +3,4 @@
 
 LOCAL_PATH := $(call my-dir)
 
-TARGET_KERNEL_CONFIG := streak7_jb_defconfig
-TARGET_KERNEL_SOURCE := kernel/dell/streak7
 

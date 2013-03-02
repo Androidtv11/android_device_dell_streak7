@@ -5,13 +5,19 @@ on early-init
 
 on init
     # See storage config details at http://source.android.com/tech/storage/
-    mkdir /storage 0050 system sdcard_r
+    mkdir /mnt/shell/emulated 0700 shell shell
+    mkdir /storage/emulated 0555 root root
 
-    export EXTERNAL_STORAGE /storage/sdcard0
-    mkdir /storage/sdcard0 0000 system system
-    symlink /storage/sdcard0 /sdcard
-    symlink /storage/sdcard0 /mnt/sdcard
-     
+    export EXTERNAL_STORAGE /storage/emulated/legacy
+    export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
+    export EMULATED_STORAGE_TARGET /storage/emulated
+
+    # Support legacy paths
+    symlink /storage/emulated/legacy /sdcard
+    symlink /storage/emulated/legacy /mnt/sdcard
+    symlink /storage/emulated/legacy /storage/sdcard0
+    symlink /mnt/shell/emulated/0 /storage/emulated/legacy
+
     # create directory for mounting external sdcard
     mkdir /storage/sdcard1 0666 system system
     symlink /storage/sdcard1 /external_sd
@@ -20,14 +26,14 @@ on init
     # create directory for mounting usb drives
     mkdir /storage/usbdisk 0666 system system
     symlink /storage/usbdisk /mnt/usbdisk
-    symlink /mnt/usbdisk /usbdisk
+    symlink /storage/usbdisk /usbdisk
 
 on early-boot
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
 
 on fs
-# Okpa, symbolic link named partitions
+    # Okpa, symbolic link named partitions
     exec /sbin/ln_named_part mmcblk3 /dev
     setprop ro.crypto.umount_sd false
     mount_all /fstab.streak7
@@ -42,7 +48,7 @@ on fs
     chmod 0660 /dev/WP1
     chown root system /dev/MSC
     chmod 0660 /dev/MSC
-
+    
     setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
 
 on post-fs-data
@@ -53,7 +59,7 @@ on post-fs-data
     mkdir /data/misc/pmlog 0770
     chown dhcp dhcp /data/misc/dhcp
 
-    # we will remap this as /mnt/sdcard with the sdcard fuse tool
+    # we will remap this as /storage/emulated with the sdcard fuse tool
     mkdir /data/media 0770 media_rw media_rw
 
     # change back to bluetooth from system
@@ -147,8 +153,13 @@ on boot
     write /sys/class/gpio/export 123
     write /sys/class/gpio/gpio123/value 0
     write /sys/class/gpio/gpio123/direction out
-    chown root system /sys/class/gpio/gpio123/value
+    chown gps system /sys/class/gpio/gpio123/value
     chmod 0664 /sys/class/gpio/gpio123/value
+    mkdir /data/gps
+    chown gps system /data/gps
+    chmod 770 /data/gps
+    chown gps system /dev/ttyHS3
+    chmod 0660 /dev/ttyHS3
 
 # Shower enable for backlight test
 chown system /sys/class/gpio/gpio143/value
@@ -195,10 +206,8 @@ service iprenew_eth0 /system/bin/dhcpcd -n
 on property:init.svc.wpa_supplicant=stopped
  stop dhcpcd_wlan0
 
-# create virtual SD card at /storage/sdcard0, based on the /data/media directory
-# deamon will drop to user/group system/media_rw after initializing
-# underlying files in /data/media wil be created with user and group media_rw (1023)
-service sdcard /system/bin/sdcard /data/media 1023 1023
+# virtual sdcard daemon running as media_rw (1023)
+service sdcard /system/bin/sdcard /data/media /mnt/shell/emulated 1023 1023
     class late_start
 
 # bugreport is triggered by the VOLUME-DOWN and VOLUME-UP keys
@@ -222,10 +231,11 @@ service sensors_daemon /system/bin/sensors_daemon
 
 # WH Lee
 # Start GPS daemon
-service gps-daemon /system/bin/glgps_nvidiaTegra2android -c /system/etc/gps/gpsconfig.xml
+service gps-daemon /system/bin/glgps_nvidiaTegra2android -c /system/etc/gpsconfig.xml
+    socket gps seqpacket 0660 gps system
+    user gps
+    group system
     class late_start
-    user root
-    group root
 
 # Shuli, logfilter init
 service lfinit /system/bin/lfinit
