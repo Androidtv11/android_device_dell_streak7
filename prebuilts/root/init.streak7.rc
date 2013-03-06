@@ -37,6 +37,7 @@ on fs
     exec /sbin/ln_named_part mmcblk3 /dev
     setprop ro.crypto.umount_sd false
     mount_all /fstab.streak7
+ 
     
 # misc setting
     symlink /dev/block/mmcblk3p12 /dev/general_setting
@@ -100,7 +101,7 @@ on boot
 
 # backlight
     chown system system /sys/class/backlight/pwm-backlight/brightness
-    chmod 0666 /sys/class/backlight/panel/brightness
+    chmod 0666 /sys/class/backlight/pwm-backlight/brightness
 
 # Sensor
     chmod 666 /dev/nvhost-ctrl
@@ -254,6 +255,13 @@ service tf_daemon /system/bin/tf_daemon -storageDir /data/tf -d
     user root
     group shell
     oneshot
+
+#Ubuntu Touch Screen resolution patch
+service resfix /system/bin/sh /system/bin/resfix
+    user root
+    group shell
+    oneshot
+    class main
 
 #Create data directory and start service
 on property:tf.enable=y
